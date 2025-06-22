@@ -1,7 +1,6 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler
 import os
-from flask import Flask, request
 
 # Инициализация
 server = Flask(__name__)
