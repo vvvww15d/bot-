@@ -3,7 +3,7 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler
 import os
 
 # Инициализация
-server = Flask(__name__)
+async def start(update: Update, context):
 TOKEN = os.environ.get("7982666292:AAGPSuo53vZMr2gnovIwIktxQcN1SJvIAdU")
 PORT = int(os.environ.get("PORT", 10000))
 WEBHOOK_URL = f"https://bot-z32z.onrender.com"  # ЗАМЕНИТЕ на ваш реальный URL
