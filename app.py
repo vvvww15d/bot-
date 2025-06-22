@@ -8,3 +8,11 @@ async def start(update: Update, context):
 app = Application.builder().token("7982666292:AAGPSuo53vZMr2gnovIwIktxQcN1SJvIAdU").build()
 app.add_handler(CommandHandler("start", start))
 app.run_polling()
+  app.run_webhook(
+        listen="0.0.0.0",
+        port=PORT,
+        webhook_url=f"https://your-render-service.onrender.com/webhook",
+        secret_token='WEBHOOK_SECRET'
+    )
+    
+    server.run(host='0.0.0.0', port=PORT)
