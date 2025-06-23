@@ -1,3 +1,11 @@
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Application, CommandHandler
+import os
+from flask import Flask, request  # Добавляем Flask для webhook
+
+# Инициализация Flask приложения
+server = Flask(__name__)
+
 # Получаем параметры из переменных окружения
 TOKEN = os.environ.get("BOT_TOKEN")  # Токен должен быть в настройках Render!
 PORT = int(os.environ.get("PORT", 10000))
