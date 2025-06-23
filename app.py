@@ -1,12 +1,7 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, CommandHandler, CallbackQueryHandler
-import os
-
-# Инициализация
-async def start(update: Update, context):
-TOKEN = os.environ.get("7982666292:AAGPSuo53vZMr2gnovIwIktxQcN1SJvIAdU")
+# Получаем параметры из переменных окружения
+TOKEN = os.environ.get("BOT_TOKEN")  # Токен должен быть в настройках Render!
 PORT = int(os.environ.get("PORT", 10000))
-WEBHOOK_URL = f"https://bot-z32z.onrender.com"  # ЗАМЕНИТЕ на ваш реальный URL
+WEBHOOK_URL = "https://bot-z32z.onrender.com/webhook"  # URL вашего бота на Render
 
 async def start(update: Update, context):
     keyboard = [[InlineKeyboardButton("15Deploy", web_app={"url": "https://ggg123fffi.github.io/"})]]
