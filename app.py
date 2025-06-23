@@ -1,39 +1,39 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler
 import os
-from flask import Flask, request  # Добавляем Flask для webhook
+from flask import Flask, request
 
-# Инициализация Flask приложения
-server = Flask(__name__)
-
-# Получаем параметры из переменных окружения
-TOKEN = os.environ.get("BOT_TOKEN")  # Токен должен быть в настройках Render!
+# Инициализация
+TOKEN = os.environ["BOT_TOKEN"]
 PORT = int(os.environ.get("PORT", 10000))
-WEBHOOK_URL = "https://bot-z32z.onrender.com/webhook"  # URL вашего бота на Render
+
+flask_app = Flask(__name__)
+bot_app = Application.builder().token(TOKEN).build()
 
 async def start(update: Update, context):
     keyboard = [[InlineKeyboardButton("15Deploy", web_app={"url": "https://ggg123fffi.github.io/"})]]
-    await update.message.reply_text("Приветствуем! Нажмите кнопку 👇", 
+    await update.message.reply_text("✅ Бот активен! Нажмите кнопку 👇", 
                                  reply_markup=InlineKeyboardMarkup(keyboard))
 
-@server.route('/')
+@flask_app.route('/')
 def home():
-    return "Bot is running!"
+    return "Bot is running and ready!"
 
-@server.route('/webhook', methods=['POST'])
+@flask_app.route('/webhook', methods=['POST'])
 def webhook():
-    update = Update.de_json(request.get_json(), app.bot)
-    app.update_queue.put(update)
+    update = Update.de_json(request.get_json(), bot_app.bot)
+    bot_app.update_queue.put(update)
     return 'ok'
 
 if __name__ == '__main__':
-    app = Application.builder().token(TOKEN).build()
-    app.add_handler(CommandHandler("start", start))
+    bot_app.add_handler(CommandHandler("start", start))
     
-    # Установка webhook
-    app.run_webhook(
+    # Автоматическое определение URL на Render
+    webhook_url = f"https://{os.environ.get('RENDER_EXTERNAL_HOSTNAME')}/webhook"
+    
+    bot_app.run_webhook(
         listen="0.0.0.0",
         port=PORT,
-        webhook_url=WEBHOOK_URL,
-        secret_token='WEBHOOK_SECRET'
+        webhook_url=webhook_url,
+        secret_token='RENDER_WEBHOOK_SECRET'  # Можно изменить на свой
     )
